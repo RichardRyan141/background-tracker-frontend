@@ -10,7 +10,9 @@ const markerIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;;
+// ✅ No public URL needed, fetch from internal backend via proxy
+// For dev, Vite proxy handles /api; in prod, you can still set VITE_BACKEND_URL if needed
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "/api";
 
 export default function App() {
   const [locations, setLocations] = useState([]);
