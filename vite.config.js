@@ -1,16 +1,19 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+/* eslint-env node */
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// https://vite.dev/config/
+// ✅ Recreate __dirname for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export default defineConfig({
   plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://background-tracker-backend.railway.internal:8080', // replace PORT with your backend port
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
+  build: {
+    outDir: "dist/client",
+    rollupOptions: {
+      input: path.resolve(__dirname, "src/main_client.jsx"),
     },
   },
-})
+});
